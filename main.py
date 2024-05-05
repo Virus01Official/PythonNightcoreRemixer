@@ -1,6 +1,8 @@
+import os
+from pytube import YouTube
 from pydub import AudioSegment
 
-def create_nightcore(input_file, output_file, speed_factor=1.25, pitch_factor=1.5):
+def create_nightcore(input_file, output_file, speed_factor=1.35, pitch_factor=5):
     # Load the input audio file
     audio = AudioSegment.from_file(input_file)
 
@@ -13,10 +15,18 @@ def create_nightcore(input_file, output_file, speed_factor=1.25, pitch_factor=1.
     # Export the Nightcore remix
     pitched_audio.export(output_file, format="mp3")
 
-# Example usage
-input_music_file = "audio.mp3"
-output_nightcore_file = "nightcore_remix.mp3"
-print("Creating Nightcore Remix...")
-create_nightcore(input_music_file, output_nightcore_file)
+def download_and_create_nightcore(url):
+    try:
+        yt = YouTube(url)
+        video = yt.streams.filter(only_audio=True).first()
+        filename = f"{yt.title}.mp3"
+        video.download(filename=filename)
+        output_filename = f"nightcore_{yt.title}.mp3"
+        create_nightcore(filename, output_filename)
+        print(f"Nightcore remix complete: {output_filename}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
-print(f"Nightcore remix saved as {output_nightcore_file}")
+# Replace with the URL of the YouTube video you want to create a Nightcore remix of
+url = "https://youtu.be/YREhVveHq9k?si=IjdnpFPfBFg6Ypua"
+download_and_create_nightcore(url)

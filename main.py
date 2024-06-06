@@ -28,5 +28,5 @@ def download_and_create_nightcore(url):
         print(f"An error occurred: {str(e)}")
 
 # Replace with the URL of the YouTube video you want to create a Nightcore remix of
-url = "https://youtu.be/YREhVveHq9k?si=IjdnpFPfBFg6Ypua"
+url = input("Paste a youtube link for a video you want to remix ")
 download_and_create_nightcore(url)
